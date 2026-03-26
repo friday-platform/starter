@@ -1,0 +1,40 @@
+services:
+  platform:
+    image: us-west2-docker.pkg.dev/friday-platform/releases/platform:latest
+    pull_policy: always    # always pull latest; set to "never" for local builds
+    platform: linux/amd64  # required on Apple Silicon Macs
+    ports:
+      - "8080:8080"  # Friday daemon API
+      - "3100:3100"  # Link (credential/auth service)
+      - "5200:5200"  # Friday Studio (web UI)
+      - "7681:7681"  # PTY server (WebSocket terminal)
+      - "9090:9090"  # Webhook tunnel
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      ATLAS_LOG_LEVEL: ${ATLAS_LOG_LEVEL:-info}
+    volumes:
+      - atlas-data:/data/atlas
+      - link-data:/data/link
+      # Uncomment to override default webhook mappings:
+      # - ./webhook-mappings.yml:/app/config/webhook-mappings.yml:ro
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - sh
+        - -c
+        - >
+          curl -sf http://localhost:8080/health &&
+          curl -sf http://localhost:3100/health &&
+          curl -sf http://localhost:7681/health &&
+          curl -sf http://localhost:9090/health
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+
+volumes:
+  atlas-data:
+  link-data:
