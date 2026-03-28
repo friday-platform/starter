@@ -19,6 +19,9 @@ services:
       - link-data:/data/link
       # Uncomment to override default webhook mappings:
       # - ./webhook-mappings.yml:/app/config/webhook-mappings.yml:ro
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     restart: unless-stopped
     healthcheck:
       test:
