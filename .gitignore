@@ -6,6 +6,9 @@ key.json
 atlas-data/
 link-data/
 
+# Claude Code
+.claude/worktrees
+
 # OS
 .DS_Store
 Thumbs.db
