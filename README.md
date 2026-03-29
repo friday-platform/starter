@@ -25,7 +25,7 @@ cp .env.example .env
 docker compose up
 ```
 
-Wait for the startup banner, then open the Studio at **http://localhost:5200**.
+Wait for the startup banner, then open the Studio at **http://localhost:15200**.
 
 ## What's included
 
