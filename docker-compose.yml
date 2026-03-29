@@ -3,6 +3,7 @@ services:
     image: us-west2-docker.pkg.dev/friday-platform/releases/platform:latest
     pull_policy: always    # always pull latest; set to "never" for local builds
     platform: linux/amd64  # required on Apple Silicon Macs
+    ## Set which ports FAST is exposed on. See .env.example.
     ports:
       - "${FRIDAY_DAEMON_PORT:-18080}:8080"  # Friday daemon API
       - "${FRIDAY_LINK_PORT:-13100}:3100"    # Link (credential/auth service)
